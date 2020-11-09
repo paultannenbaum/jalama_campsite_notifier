@@ -20,6 +20,13 @@ defmodule JalamaScraper.MixProject do
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
-    [{:mechanize, "~> 0.1"}]
+    [
+      {:mechanize, "~> 0.1"},
+      {:timex, "~> 3.5"}
+    ]
+  end
+
+  defp log do
+    Logger.debug "Starting Application..."
   end
 end
