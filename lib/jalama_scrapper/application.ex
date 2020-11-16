@@ -6,9 +6,7 @@ defmodule JalamaScrapper.Application do
   use Application
 
   def start(_type, _args) do
-    children = [
-      JalamaScrapper.Scheduler
-    ]
+    children = [JalamaScrapper.Scheduler]
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: JalamaScrapper.Supervisor]
