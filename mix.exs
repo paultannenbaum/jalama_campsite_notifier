@@ -46,7 +46,9 @@ defmodule JalamaScrapper.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:mechanize, "~> 0.1"},
-      {:timex, "~> 3.5"}
+      {:timex, "~> 3.5"},
+      {:quantum, "~> 3.0"},
+      {:tzdata, "~> 1.0.4"}
     ]
   end
 
