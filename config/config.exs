@@ -9,18 +9,18 @@ use Mix.Config
 
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
-# Configures Elixir's Logger
-config :logger, :console,
-  format: "$time $metadata[$level] $message\n"
+config :logger, :console, format: "$time $metadata[$level] $message\n"
 
 config :phoenix, :json_library, Jason
-
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-import_config "#{Mix.env()}.exs"
 
 config :jalama_scrapper,
        JalamaScrapper.Scheduler,
        timezone: "America/Los_Angeles",
        jobs: [{"0 0 * * *", fn -> JalamaScrapper.SiteChecker.init end}],
        debug_logging: false
+
+# Import environment specific config. This must remain at the bottom
+# of this file so it overrides the configuration defined above.
+import_config "#{Mix.env()}.exs"
+
+

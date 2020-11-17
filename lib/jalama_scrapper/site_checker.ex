@@ -10,6 +10,27 @@ defmodule JalamaScrapper.SiteChecker do
     perform(5)
   end
 
+  # TODO: Make it send an email saying site was not reachable
+  defp perform(_retry = 0), do: :ignore
+
+  defp perform(retry) do
+    browser = Browser.new()
+
+    try do
+      _response = browser
+      |> visit_parks_page
+      |> visit_jalama_page
+      |> choose_dates
+      |> list_available_sites
+      |> send_email_report
+    catch
+      :exit, _ ->
+        Logger.info("Retrying job...")
+        :timer.sleep(3000)
+        perform(retry - 1)
+    end
+  end
+
   defp visit_parks_page(browser) do
     Logger.info("Visiting SB Parks")
     Browser.get!(browser, "https://reservations.sbparks.org/reservation/camping/index.asp")
@@ -72,25 +93,4 @@ defmodule JalamaScrapper.SiteChecker do
   defp get_site_number(site_id) when site_id <= 1841, do: site_id - 1766
   defp get_site_number(site_id) when site_id > 1841 and site_id < 1861, do: site_id - 1763
   defp get_site_number(site_id) when site_id >= 1861, do: site_id - 1756
-
-  # TODO: Make it send an email saying site was not reachable
-  defp perform(_retry = 0), do: :ignore
-
-  defp perform(retry) do
-    browser = Browser.new()
-
-    try do
-      _response = browser
-       |> visit_parks_page
-       |> visit_jalama_page
-       |> choose_dates
-       |> list_available_sites
-       |> send_email_report
-    catch
-      :exit, _ ->
-        Logger.info("Retrying job...")
-        :timer.sleep(3000)
-        perform(retry - 1)
-    end
-  end
 end
