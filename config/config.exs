@@ -22,5 +22,5 @@ import_config "#{Mix.env()}.exs"
 config :jalama_scrapper,
        JalamaScrapper.Scheduler,
        timezone: "America/Los_Angeles",
-       jobs: [{"0 0 * * *", fn -> JalamaScrapper.say_hello end}],
+       jobs: [{"0 0 * * *", fn -> JalamaScrapper.SiteChecker.init end}],
        debug_logging: false

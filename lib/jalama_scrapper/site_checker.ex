@@ -80,7 +80,7 @@ defmodule JalamaScrapper.SiteChecker do
     browser = Browser.new()
 
     try do
-      response = browser
+      _response = browser
        |> visit_parks_page
        |> visit_jalama_page
        |> choose_dates
