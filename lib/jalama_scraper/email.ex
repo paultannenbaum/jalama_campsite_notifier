@@ -5,7 +5,7 @@ defmodule JalamaScraper.Email do
     |> SendGrid.Email.add_to("paultannenbaum@gmail.com")
     |> SendGrid.Email.put_from("noreply@baumerdesigns.com")
     |> SendGrid.Email.put_subject("Jalama Campground Report")
-    |> SendGrid.Email.put_html("#{beach_sites_html(sites)}#{all_sites_html(sites)}")
+    |> SendGrid.Email.put_html("#{date_html()}#{beach_sites_html(sites)}#{all_sites_html(sites)}")
     |> SendGrid.Mail.send()
   end
 
@@ -16,6 +16,12 @@ defmodule JalamaScraper.Email do
     |> SendGrid.Email.put_subject("Jalama Campground Report")
     |> SendGrid.Email.put_html("<p>Bot failure. Site was not reachable or some kind of other failure happened</p>")
     |> SendGrid.Mail.send()
+  end
+
+  defp date_html do
+    arrive_date = JalamaScraper.Helpers.six_months_from_today()
+
+    "<p>This report is automatically checking the Jalama website six months from today for an arrival date of #{arrive_date}</p>"
   end
 
   defp beach_sites_html(sites) do

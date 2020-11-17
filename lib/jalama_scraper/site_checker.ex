@@ -30,14 +30,8 @@ defmodule JalamaScraper.SiteChecker do
   end
 
   defp choose_dates(page) do
-    arrive_date =
-      Timex.now("America/Los_Angeles")
-      |> Timex.shift(months: 6)
-      |> format_date
-    depart_date =
-      Timex.now("America/Los_Angeles")
-      |> Timex.shift(months: 6, days: 2)
-      |> format_date
+    arrive_date = JalamaScraper.Helpers.six_months_from_today()
+    depart_date = JalamaScraper.Helpers.six_months_from_today_plus_two()
 
     Logger.info("Choosing dates of #{arrive_date} - #{depart_date}")
     Page.form_with(page, name: "reserve_form")
@@ -59,10 +53,5 @@ defmodule JalamaScraper.SiteChecker do
   defp send_email_report(available_sites) do
     Logger.info("Sending Email Report")
     JalamaScraper.Email.report(available_sites)
-  end
-
-  defp format_date(date) do
-    {:ok, formatted_date} = Timex.format(date, "%m/%d/%Y", :strftime)
-    formatted_date
   end
 end
