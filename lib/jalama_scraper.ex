@@ -1,0 +1,2 @@
+defmodule JalamaScraper do
+end

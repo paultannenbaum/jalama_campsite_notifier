@@ -1,4 +1,4 @@
-defmodule JalamaScrapper.Application do
+defmodule JalamaScraper.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -6,10 +6,10 @@ defmodule JalamaScrapper.Application do
   use Application
 
   def start(_type, _args) do
-    children = [JalamaScrapper.Scheduler]
+    children = [JalamaScraper.Scheduler]
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: JalamaScrapper.Supervisor]
+    opts = [strategy: :one_for_one, name: JalamaScraper.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

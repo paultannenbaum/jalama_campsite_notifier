@@ -1,4 +1,4 @@
-defmodule JalamaScrapper.SiteChecker do
+defmodule JalamaScraper.SiteChecker do
   alias Mechanize.Browser
   alias Mechanize.Form
   alias Mechanize.Page
@@ -58,7 +58,7 @@ defmodule JalamaScrapper.SiteChecker do
 
   defp send_email_report(available_sites) do
     Logger.info("Sending Email Report")
-    JalamaScrapper.Email.report(available_sites)
+    JalamaScraper.Email.report(available_sites)
   end
 
   defp format_date(date) do

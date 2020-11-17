@@ -1,4 +1,4 @@
-defmodule JalamaScrapper.Email do
+defmodule JalamaScraper.Email do
   def report(sites) do
 
     SendGrid.Email.build()
@@ -30,7 +30,7 @@ defmodule JalamaScrapper.Email do
       end
     end)
 
-    case beach_sites do
+    _beach_sites_html = case beach_sites do
       [] ->
         "<h2>NO BEACH SITES AVAILABLE</h2>"
       _ ->
@@ -43,7 +43,7 @@ defmodule JalamaScrapper.Email do
   end
 
   defp all_sites_html(sites) do
-    total_sites_html = case sites do
+    _total_sites_html = case sites do
       [] ->
         "<h2>NO SITES AVAILABLE</h2>"
       _ ->

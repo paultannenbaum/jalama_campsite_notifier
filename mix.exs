@@ -1,9 +1,9 @@
-defmodule JalamaScrapper.MixProject do
+defmodule JalamaScraper.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :jalama_scrapper,
+      app: :jalama_scraper,
       version: "0.1.0",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -19,7 +19,7 @@ defmodule JalamaScrapper.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {JalamaScrapper.Application, []},
+      mod: {JalamaScraper.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
