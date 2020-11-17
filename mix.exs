@@ -48,7 +48,8 @@ defmodule JalamaScrapper.MixProject do
       {:mechanize, "~> 0.1"},
       {:timex, "~> 3.5"},
       {:quantum, "~> 3.0"},
-      {:tzdata, "~> 1.0.4"}
+      {:tzdata, "~> 1.0.4"},
+      {:sendgrid, "~> 2.0"}
     ]
   end
 

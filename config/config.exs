@@ -13,10 +13,13 @@ config :logger, :console, format: "$time $metadata[$level] $message\n"
 
 config :phoenix, :json_library, Jason
 
+config :sendgrid, api_key: {:system, "SENDGRID_API_KEY"}
+
 config :jalama_scrapper,
        JalamaScrapper.Scheduler,
        timezone: "America/Los_Angeles",
-       jobs: [{"0 0 * * *", fn -> JalamaScrapper.SiteChecker.init end}],
+#       jobs: [{"0 0 * * *", fn -> JalamaScrapper.SiteChecker.init end}],
+       jobs: [{"* * * * *", fn -> JalamaScrapper.SiteChecker.init end}],
        debug_logging: false
 
 # Import environment specific config. This must remain at the bottom

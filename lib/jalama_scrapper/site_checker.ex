@@ -10,8 +10,7 @@ defmodule JalamaScrapper.SiteChecker do
     perform(5)
   end
 
-  # TODO: Make it send an email saying site was not reachable
-  defp perform(_retry = 0), do: :ignore
+  defp perform(_retry = 0), do: JalamaScrapper.Email.site_not_reachable()
 
   defp perform(retry) do
     browser = Browser.new()
@@ -71,18 +70,9 @@ defmodule JalamaScrapper.SiteChecker do
   end
 
   defp send_email_report(available_sites) do
+    Logger.info("Sending Email Report")
     available_beach_sites = available_sites |> Enum.filter(fn s -> s >= 53 and s <= 64 end)
-
-    case available_beach_sites do
-      [] ->
-        Logger.info("NO BEACH SITES AVAILABLE")
-      _ ->
-        Logger.info("AVAILABLE BEACH SITES:")
-        IO.inspect(available_beach_sites)
-    end
-
-    Logger.info("AVAILABLE SITES:")
-    IO.inspect(available_sites)
+    JalamaScrapper.Email.report(available_beach_sites, available_sites)
   end
 
   defp format_date(date) do
@@ -90,7 +80,8 @@ defmodule JalamaScrapper.SiteChecker do
     formatted_date
   end
 
-  defp get_site_number(site_id) when site_id <= 1841, do: site_id - 1766
-  defp get_site_number(site_id) when site_id > 1841 and site_id < 1861, do: site_id - 1763
+  defp get_site_number(site_id) when site_id >= 1819 and site_id <= 1841, do: site_id - 1766
+  defp get_site_number(site_id) when site_id <= 1841, do: site_id - 1764
   defp get_site_number(site_id) when site_id >= 1861, do: site_id - 1756
+  defp get_site_number(_), do: 0
 end
