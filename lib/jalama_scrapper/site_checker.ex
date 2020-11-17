@@ -7,27 +7,14 @@ defmodule JalamaScrapper.SiteChecker do
 
   def init do
     Logger.info("Starting Application...")
-    perform(5)
-  end
-
-  defp perform(_retry = 0), do: JalamaScrapper.Email.site_not_reachable()
-
-  defp perform(retry) do
     browser = Browser.new()
 
-    try do
-      _response = browser
+    _response = browser
       |> visit_parks_page
       |> visit_jalama_page
       |> choose_dates
       |> list_available_sites
       |> send_email_report
-    catch
-      :exit, _ ->
-        Logger.info("Retrying job...")
-        :timer.sleep(3000)
-        perform(retry - 1)
-    end
   end
 
   defp visit_parks_page(browser) do
@@ -61,27 +48,21 @@ defmodule JalamaScrapper.SiteChecker do
 
   defp list_available_sites(page) do
     Logger.info("Listing Available Sites")
-    Page.search(page, "div.row.card-col.ui-widget-content")
-    |> Enum.map(fn elem ->
-      Element.attr(elem, :"data-id")
-      |> String.to_integer
-      |> get_site_number
-    end)
+    Page.search(page, "span.ghost_title.panto-coordinates")
+    |> Enum.map(&Element.text/1)
+    |> Enum.map(&String.replace(&1, "Site:", ""))
+    |> Enum.map(&String.replace(&1, "Jalama Beach", ""))
+    |> Enum.map(&String.trim/1)
+    |> IO.inspect
   end
 
   defp send_email_report(available_sites) do
     Logger.info("Sending Email Report")
-    available_beach_sites = available_sites |> Enum.filter(fn s -> s >= 53 and s <= 64 end)
-    JalamaScrapper.Email.report(available_beach_sites, available_sites)
+    JalamaScrapper.Email.report(available_sites)
   end
 
   defp format_date(date) do
     {:ok, formatted_date} = Timex.format(date, "%m/%d/%Y", :strftime)
     formatted_date
   end
-
-  defp get_site_number(site_id) when site_id >= 1819 and site_id <= 1841, do: site_id - 1766
-  defp get_site_number(site_id) when site_id <= 1841, do: site_id - 1764
-  defp get_site_number(site_id) when site_id >= 1861, do: site_id - 1756
-  defp get_site_number(_), do: 0
 end

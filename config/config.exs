@@ -18,8 +18,7 @@ config :sendgrid, api_key: {:system, "SENDGRID_API_KEY"}
 config :jalama_scrapper,
        JalamaScrapper.Scheduler,
        timezone: "America/Los_Angeles",
-#       jobs: [{"0 0 * * *", fn -> JalamaScrapper.SiteChecker.init end}],
-       jobs: [{"* * * * *", fn -> JalamaScrapper.SiteChecker.init end}],
+       jobs: [{"0 0 * * *", fn -> JalamaScrapper.Job.perform(5) end}],
        debug_logging: false
 
 # Import environment specific config. This must remain at the bottom
