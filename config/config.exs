@@ -13,8 +13,6 @@ config :logger, :console, format: "$time $metadata[$level] $message\n"
 
 config :phoenix, :json_library, Jason
 
-config :sendgrid, api_key: {:system, "SENDGRID_API_KEY"}
-
 config :jalama_scraper,
        JalamaScraper.Scheduler,
        timezone: "America/Los_Angeles",
