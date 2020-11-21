@@ -18,18 +18,21 @@ defmodule JalamaScraper.SiteChecker do
   end
 
   defp visit_parks_page(browser) do
+    options = [recv_timeout: 100_000]
     Logger.info("Visiting SB Parks")
-    Browser.get!(browser, "https://reservations.sbparks.org/reservation/camping/index.asp")
+    Browser.get!(browser, "https://reservations.sbparks.org/reservation/camping/index.asp", options: options)
   end
 
   defp visit_jalama_page(page) do
+    options = [recv_timeout: 100_000]
     Logger.info("Choosing Jalama Beach Park")
     Page.form_with(page, name: "reserve_form")
     |> Form.select(name: "parent_idno", option: [value: "2"])
-    |> Form.submit!
+    |> Form.submit!(nil, options: options)
   end
 
   defp choose_dates(page) do
+    options = [recv_timeout: 100_000]
     arrive_date = JalamaScraper.Helpers.six_months_from_today()
     depart_date = JalamaScraper.Helpers.six_months_from_today_plus_two()
 
@@ -37,7 +40,7 @@ defmodule JalamaScraper.SiteChecker do
     Page.form_with(page, name: "reserve_form")
     |> Form.fill_text(name: "arrive_date", with: arrive_date)
     |> Form.fill_text(name: "depart_date", with: depart_date)
-    |> Form.submit!
+    |> Form.submit!(nil, options: options)
   end
 
   defp list_available_sites(page) do

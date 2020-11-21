@@ -21,7 +21,7 @@ defmodule JalamaScraper.Email do
   defp date_html do
     arrive_date = JalamaScraper.Helpers.six_months_from_today()
 
-    "<p>This report is automatically checking the Jalama website six months from today for an arrival date of #{arrive_date}</p>"
+    "<p>This report is automatically checking the <a href='https://reservations.sbparks.org/reservation/camping/index.asp'/>Jalama website</a> six months from today for an arrival date of #{arrive_date}</p>"
   end
 
   defp beach_sites_html(sites) do
