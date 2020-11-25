@@ -1,21 +1,28 @@
 defmodule JalamaScraper.Email do
   def report(sites) do
-
     SendGrid.Email.build()
-    |> SendGrid.Email.add_to("paultannenbaum@gmail.com")
-    |> SendGrid.Email.put_from("noreply@baumerdesigns.com")
-    |> SendGrid.Email.put_subject("Jalama Campground Report")
-    |> SendGrid.Email.put_html("#{date_html()}#{beach_sites_html(sites)}#{all_sites_html(sites)}")
+    |> add_recipients()
+    |> add_email_details()
+    |> SendGrid.Email.put_html(report_html(sites))
     |> SendGrid.Mail.send()
   end
 
   def site_not_reachable do
     SendGrid.Email.build()
-    |> SendGrid.Email.add_to("paultannenbaum@gmail.com")
-    |> SendGrid.Email.put_from("noreply@baumerdesigns.com")
-    |> SendGrid.Email.put_subject("Jalama Campground Report")
-    |> SendGrid.Email.put_html("<p>Bot failure. Site was not reachable or some kind of other failure happened</p>")
+    |> add_recipients()
+    |> add_email_details()
+    |> SendGrid.Email.put_html("<p>Site was not reachable or some kind of other failure happened</p>")
     |> SendGrid.Mail.send()
+  end
+
+  defp add_recipients(email) do
+    SendGrid.Email.add_to(email, "paultannenbaum@gmail.com")
+    |> SendGrid.Email.add_to("mike@channelislandso.com")
+  end
+
+  defp add_email_details(email) do
+    SendGrid.Email.put_from(email, "noreply@baumerdesigns.com")
+    |> SendGrid.Email.put_subject("Jalama Campground Report")
   end
 
   defp date_html do
@@ -59,5 +66,9 @@ defmodule JalamaScraper.Email do
          </ul>
         "
     end
+  end
+
+  defp report_html(sites) do
+    "#{date_html()}#{beach_sites_html(sites)}#{all_sites_html(sites)}"
   end
 end
