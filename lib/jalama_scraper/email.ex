@@ -18,6 +18,7 @@ defmodule JalamaScraper.Email do
   defp add_recipients(email) do
     SendGrid.Email.add_to(email, "paultannenbaum@gmail.com")
     |> SendGrid.Email.add_to("mike@channelislandso.com")
+    |> SendGrid.Email.add_to("tommy.riparetti@gmail.com")
   end
 
   defp add_email_details(email) do
