@@ -1,4 +1,6 @@
 defmodule JalamaScraper.Email do
+  @email_recipients = ["paultannenbaum@gmail.com", "mike@channelislandso.com", "tommy.riparetti@gmail.com"]
+
   def report(sites) do
     SendGrid.Email.build()
     |> add_recipients()
@@ -16,9 +18,7 @@ defmodule JalamaScraper.Email do
   end
 
   defp add_recipients(email) do
-    SendGrid.Email.add_to(email, "paultannenbaum@gmail.com")
-    |> SendGrid.Email.add_to("mike@channelislandso.com")
-    |> SendGrid.Email.add_to("tommy.riparetti@gmail.com")
+    Enum.each(@email_recipients, fn recipeint  -> SendGrid.Email.add_to(email, recipient))
   end
 
   defp add_email_details(email) do
