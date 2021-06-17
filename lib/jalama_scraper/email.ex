@@ -1,5 +1,5 @@
 defmodule JalamaScraper.Email do
-  @email_recipients = ["paultannenbaum@gmail.com", "mike@channelislandso.com", "tommy.riparetti@gmail.com"]
+  @email_recipients = ["paultannenbaum@gmail.com", "mike@channelislandso.com", "tommy.riparetti@gmail.com", "jayswain@gmail.com"]
 
   def report(sites) do
     SendGrid.Email.build()
